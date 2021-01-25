@@ -9,7 +9,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :conversation
+      resources :conversation do
+        collection do
+          get 'user_conversation/:idUser', to: 'conversation#user_conversation'
+        end
+      end
+
     end
   end
 end

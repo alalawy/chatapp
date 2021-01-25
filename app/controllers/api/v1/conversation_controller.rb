@@ -30,6 +30,11 @@ class Api::V1::ConversationController < ApplicationController
         render json: {status: 'SUCCESS', message:'Conversation deleted', data: conversation}, status: :ok
     end
 
+    def user_conversation
+        conversation = Conversation.where('idCreator = ? OR idReceiver = ?', params[:idUser], params[:idUser])
+        render json: {status: 'SUCCESS', message:'Loaded conversation', data: conversation}, status: :ok
+    end
+
     # Parameters for create conversation
     private
     def conversationParams
