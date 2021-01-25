@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_105858) do
+ActiveRecord::Schema.define(version: 2021_01_25_110222) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "idCreator"
     t.string "idReceiver"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "idConversation"
+    t.string "idSender"
+    t.string "message"
+    t.string "messageType"
+    t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
