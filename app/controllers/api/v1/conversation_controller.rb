@@ -30,7 +30,7 @@ class Api::V1::ConversationController < ApplicationController
         render json: {status: 'SUCCESS', message:'Conversation deleted', data: conversation}, status: :ok
     end
 
-    # DELETE /api/v1/conversation/user_conversation/:idUser
+    # GET /api/v1/conversation/user_conversation/:idUser
     def user_conversation
         conversation = Conversation.where('idCreator = ? OR idReceiver = ?', params[:idUser], params[:idUser])
         render json: {status: 'SUCCESS', message:'Loaded conversation', data: conversation}, status: :ok
