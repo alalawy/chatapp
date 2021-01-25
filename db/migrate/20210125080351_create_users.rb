@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :nama
       t.string :nomorHp
       t.integer :status
-      t.string :kodeUser
 
       t.timestamps
     end
