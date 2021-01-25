@@ -3,7 +3,7 @@ class Api::V1::MessagesController < ApplicationController
    
 
     def list
-        message = Message.where('idConversation = ?', params[:idConversation])
+        message = Message.where('idConversation = ?', params[:idConversation]).order('created_at DESC')
         render json: {status: 'SUCCESS', message:'Loaded message', data: message}, status: :ok
     end
 
