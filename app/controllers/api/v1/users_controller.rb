@@ -22,6 +22,12 @@ module Api
                 end
             end
 
+            def destroy
+                user = User.find(params[:id]);
+                user.destroy
+                render json: {status: 'SUCCESS', message:'User deleted', data: user}, status: :ok
+            end
+
             private
             def userParams
                 params.permit(:kodeUser, :nama, :nomorHp, :status).with_defaults(status: 0)
