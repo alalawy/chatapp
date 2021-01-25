@@ -15,7 +15,8 @@ ActiveRecord::Schema.define(version: 2021_01_25_080351) do
   create_table "users", force: :cascade do |t|
     t.string "nama"
     t.string "nomorHp"
-    t.string "status"
+    t.integer "status"
+    t.string "kodeUser"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
