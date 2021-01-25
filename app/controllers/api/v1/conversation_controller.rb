@@ -1,14 +1,18 @@
 class Api::V1::ConversationController < ApplicationController
+
+    # GET    /api/v1/conversation
     def index
         conversations = Conversation.order('created_at DESC')
         render json: {status: 'SUCCESS', message:'Loaded conversations', data: conversations}, status: :ok
     end
 
+    # GET    /api/v1/conversation/:id
     def show
         conversation = Conversation.find(params[:id])
         render json: {status: 'SUCCESS', message:'Loaded conversation', data: conversation}, status: :ok
     end
 
+    # POST   /api/v1/conversation
     def create
         conversation = Conversation.new(conversationParams)
 
@@ -19,12 +23,14 @@ class Api::V1::ConversationController < ApplicationController
         end
     end
 
+    # DELETE /api/v1/conversation/:id
     def destroy
         conversation = Conversation.find(params[:id])
         conversation.destroy
         render json: {status: 'SUCCESS', message:'Conversation deleted', data: conversation}, status: :ok
     end
 
+    # Parameters for create conversation
     private
     def conversationParams
         params.permit(:idCreator, :idReceiver)
