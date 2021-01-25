@@ -15,6 +15,13 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :messages do
+        collection do
+          get 'list/:idConversation', to: 'messages#list'
+          post :sendmessage
+        end
+      end
+
     end
   end
 end
