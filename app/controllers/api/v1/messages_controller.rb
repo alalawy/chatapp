@@ -57,10 +57,21 @@ class Api::V1::MessagesController < ApplicationController
         end
     end
 
+    # GET /api/v1/message/unread/:idConversation/:idUser
     def unread
-        message = Message.where('idConversation = ? and idSender != ?', params[:idConversation], params[:idUser]).order('created_at DESC')
+        message = Message.where('idConversation = ? and idSender != ? and status = 0', params[:idConversation], params[:idUser]).order('created_at DESC')
         messageCount = message.length()
-        render json: {status: 'SUCCESS', message:'Loaded message', data: messageCount}, status: :ok
+        render json: {status: 'SUCCESS', message:'unread message count', data: messageCount}, status: :ok
+    end
+
+    # GET /api/v1/message/read/:idConversation/:idUser
+    def read
+        message = Message.where('idConversation = ? and idSender != ? and status = 0', params[:idConversation], params[:idUser]).order('created_at DESC')
+        messageCount = message.length()
+        for i in 0..messageCount-1 do
+            message[i].update_attribute :status, 1 
+        end
+        render json: {status: 'SUCCESS', message:'read message', data: messageCount}, status: :ok
     end
   
     # DELETE /api/v1/message/:id

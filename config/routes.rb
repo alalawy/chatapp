@@ -21,6 +21,7 @@ Rails.application.routes.draw do
           post :sendmessage
           post :sendmessageauto
           get 'unread/:idConversation/:idUser', to: 'messages#unread'
+          get 'read/:idConversation/:idUser', to: 'messages#read'
         end
       end
 
