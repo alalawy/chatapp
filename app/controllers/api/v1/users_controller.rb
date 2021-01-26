@@ -14,12 +14,17 @@ class Api::V1::UsersController < ApplicationController
 
     # POST   /api/v1/users
     def create
-        user = User.new(userParams)
+        checkUser = User.where('nomorHp = ?', params[:nomorHp])
+        if checkUser.length() == 0
+            user = User.new(userParams)
 
-        if user.save 
-            render json: {status: 'SUCCESS', message:'user saved', data: user}, status: :ok
+            if user.save 
+                render json: {status: 'SUCCESS', message:'user saved', data: user}, status: :ok
+            else
+                render json: {status: 'ERROR', message:'Error save user', data: user.errors}, status: :unprocessable_entity
+            end
         else
-            render json: {status: 'ERROR', message:'Error save user', data: user.errors}, status: :unprocessable_entity
+            render json: {status: 'ERROR', message:'Error save user, phone number already registered'}, status: :unprocessable_entity
         end
     end
 
