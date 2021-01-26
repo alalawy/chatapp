@@ -154,7 +154,7 @@ Create New Conversation
 ```
 Delete Conversation
 > DELETE
-> `http://127.0.0.1:3000/api/v1/conversation/:idUser`
+> `http://127.0.0.1:3000/api/v1/conversation/:idConversation`
 > Sample Response
 ```json
 {
@@ -193,5 +193,145 @@ Get User Conversation
       "updated_at": "2021-01-25T15:54:30.851Z"
     }
   ]
+}
+```
+
+
+
+**Messages**
+
+BASE URL
+   
+    http://127.0.0.1:3000/api/v1/messages
+Show Message List
+> GET
+> `http://127.0.0.1:3000/api/v1/messages/list/:idConversation`
+> Sample Response
+ ```json
+{
+  "status": "SUCCESS",
+  "message": "Loaded message",
+  "data": [
+    {
+      "id": 2,
+      "idConversation": "2",
+      "idSender": "1",
+      "message": "hi, david disini",
+      "messageType": "Text",
+      "status": 1,
+      "created_at": "2021-01-25T15:34:55.498Z",
+      "updated_at": "2021-01-26T11:35:41.547Z"
+    },
+    {
+      "id": 1,
+      "idConversation": "2",
+      "idSender": "1",
+      "message": "hi, david disini",
+      "messageType": "Text",
+      "status": 1,
+      "created_at": "2021-01-25T15:31:45.918Z",
+      "updated_at": "2021-01-26T11:35:42.556Z"
+    }
+  ]
+}
+```
+Send Message Without Auto Check Conversation
+> POST
+> `http://127.0.0.1:3000/api/v1/messages/sendmessage`
+> Header 	: Conten-Type : application/json
+> Sample Request
+```json
+{
+   "idConversation": 10,
+   "idSender": 1,
+   "message" : "hi, ars disini"
+}
+```
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "message sent",
+  "data": {
+    "id": 14,
+    "idConversation": "10",
+    "idSender": "1",
+    "message": "hi, ars disini",
+    "messageType": "Text",
+    "status": 0,
+    "created_at": "2021-01-26T11:41:27.752Z",
+    "updated_at": "2021-01-26T11:41:27.752Z"
+  }
+}
+```
+Send Message With Auto Check Conversation
+> POST
+> `http://127.0.0.1:3000/api/v1/messages/sendmessageauto`
+> Header 	: Conten-Type : application/json
+> Sample Request
+```json
+{
+   "idSender": 1,
+   "idReceiver": 9,
+   "message" : "hi, ars disini"
+}
+```
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "message sent",
+  "data": {
+    "id": 14,
+    "idConversation": "10",
+    "idSender": "1",
+    "message": "hi, ars disini",
+    "messageType": "Text",
+    "status": 0,
+    "created_at": "2021-01-26T11:41:27.752Z",
+    "updated_at": "2021-01-26T11:41:27.752Z"
+  }
+}
+```
+Delete Message
+> DELETE
+> `http://127.0.0.1:3000/api/v1/messages/:idMessage`
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "Message deleted",
+  "data": {
+    "id": 1,
+    "idConversation": "2",
+    "idSender": "1",
+    "message": "hi, david disini",
+    "messageType": "Text",
+    "status": 1,
+    "created_at": "2021-01-25T15:31:45.918Z",
+    "updated_at": "2021-01-26T11:35:42.556Z"
+  }
+}
+```
+Get Unread Message Count
+> GET
+> `http://127.0.0.1:3000/api/v1/messages/unread/:idConversation/:idUser`
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "unread message count",
+  "data": 1
+}
+```
+Set Unread Message to Read
+> GET
+> `http://127.0.0.1:3000/api/v1/messages/read/:idConversation/:idUser`
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "read message",
+  "data": 1
 }
 ```
