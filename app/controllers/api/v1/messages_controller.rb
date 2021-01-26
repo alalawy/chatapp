@@ -1,12 +1,12 @@
 class Api::V1::MessagesController < ApplicationController
 
-   
-
+    # GET    /api/v1/messages/list/:idConversation
     def list
         message = Message.where('idConversation = ?', params[:idConversation]).order('created_at DESC')
         render json: {status: 'SUCCESS', message:'Loaded message', data: message}, status: :ok
     end
 
+    # POST   /api/v1/messages/sendmessageauto
     def sendmessageauto
         conversationSender = Conversation.where('idCreator = ? and idReceiver = ?', params[:idSender], params[:idReceiver])
         
@@ -41,6 +41,7 @@ class Api::V1::MessagesController < ApplicationController
         end
     end
 
+    # POST   /api/v1/messages/sendmessage
     def sendmessage
         message = Message.new
         message.idConversation = params[:idConversation]
@@ -54,6 +55,12 @@ class Api::V1::MessagesController < ApplicationController
         else
             render json: {status: 'ERROR', message:'Error sent message', data: message.errors}, status: :unprocessable_entity
         end
+    end
+
+    def unread
+        message = Message.where('idConversation = ? and idSender != ?', params[:idConversation], params[:idUser]).order('created_at DESC')
+        messageCount = message.length()
+        render json: {status: 'SUCCESS', message:'Loaded message', data: messageCount}, status: :ok
     end
   
     # DELETE /api/v1/message/:id
