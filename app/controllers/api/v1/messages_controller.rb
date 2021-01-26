@@ -7,7 +7,7 @@ class Api::V1::MessagesController < ApplicationController
         render json: {status: 'SUCCESS', message:'Loaded message', data: message}, status: :ok
     end
 
-    def sendmessage
+    def sendmessageauto
         conversationSender = Conversation.where('idCreator = ? and idReceiver = ?', params[:idSender], params[:idReceiver])
         
         if conversationSender.length() > 0
@@ -29,6 +29,21 @@ class Api::V1::MessagesController < ApplicationController
         
         message = Message.new
         message.idConversation = idConversation
+        message.idSender = params[:idSender]
+        message.message = params[:message]
+        message.messageType = "Text"
+        message.status = 0
+
+        if message.save 
+            render json: {status: 'SUCCESS', message:'message sent', data: message}, status: :ok
+        else
+            render json: {status: 'ERROR', message:'Error sent message', data: message.errors}, status: :unprocessable_entity
+        end
+    end
+
+    def sendmessage
+        message = Message.new
+        message.idConversation = params[:idConversation]
         message.idSender = params[:idSender]
         message.message = params[:message]
         message.messageType = "Text"

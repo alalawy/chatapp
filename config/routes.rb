@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         collection do
           get 'list/:idConversation', to: 'messages#list'
           post :sendmessage
+          post :sendmessageauto
         end
       end
 
