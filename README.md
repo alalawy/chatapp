@@ -48,7 +48,7 @@ Create New User
 }
 ```
 Delete User
-> GET
+> DELETE
 > `http://127.0.0.1:3000/api/v1/users/:idUser`
 > Sample Response
 ```json
@@ -102,3 +102,96 @@ Set User Offline
 }
 ```
 
+
+
+**Conversation**
+
+BASE URL
+   
+    http://127.0.0.1:3000/api/v1/conversation
+Show All Conversation
+> GET
+> Sample Response
+ ```json
+{
+  {
+  "status": "SUCCESS",
+  "message": "Loaded conversations",
+  "data": [
+    {
+      "id": 10,
+      "idCreator": "1",
+      "idReceiver": "9",
+      "created_at": "2021-01-25T16:03:03.159Z",
+      "updated_at": "2021-01-25T16:03:03.159Z"
+    },
+  ]
+}
+```
+Create New Conversation
+> POST
+> Header 	: Conten-Type : application/json
+> Sample Request
+```json
+{
+   "idCreator": 5,
+   "idReceiver": 1
+}
+```
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "conversation saved",
+  "data": {
+    "id": 5,
+    "idCreator": "5",
+    "idReceiver": "1",
+    "created_at": "2021-01-25T13:10:55.372Z",
+    "updated_at": "2021-01-25T13:10:55.372Z"
+  }
+}
+```
+Delete Conversation
+> DELETE
+> `http://127.0.0.1:3000/api/v1/conversation/:idUser`
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "Conversation deleted",
+  "data": {
+    "id": 1,
+    "idCreator": "2",
+    "idReceiver": "3",
+    "created_at": "2021-01-25T13:09:48.046Z",
+    "updated_at": "2021-01-25T13:09:48.046Z"
+  }
+}
+```
+Get User Conversation
+> GET
+> `http://127.0.0.1:3000/api/v1/conversation/user_conversation/:idUser`
+> Sample Response
+```json
+{
+  "status": "SUCCESS",
+  "message": "Loaded conversation",
+  "data": [
+    {
+      "id": 4,
+      "idCreator": "2",
+      "idReceiver": "4",
+      "created_at": "2021-01-25T13:10:11.362Z",
+      "updated_at": "2021-01-25T13:10:11.362Z"
+    },
+    {
+      "id": 6,
+      "idCreator": "1",
+      "idReceiver": "2",
+      "created_at": "2021-01-25T15:54:30.851Z",
+      "updated_at": "2021-01-25T15:54:30.851Z"
+    }
+  ]
+}
+```
