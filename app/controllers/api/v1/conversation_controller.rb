@@ -14,12 +14,23 @@ class Api::V1::ConversationController < ApplicationController
 
     # POST   /api/v1/conversation
     def create
-        conversation = Conversation.new(conversationParams)
-
-        if conversation.save 
-            render json: {status: 'SUCCESS', message:'conversation saved', data: conversation}, status: :ok
+        conversationSender = Conversation.where('idCreator = ? and idReceiver = ?', params[:idCreator], params[:idReceiver])
+        
+        if conversationSender.length() > 0
+            render json: {status: 'ERROR', message:'Error save conversation, Conversation already registered'}, status: :unprocessable_entity
         else
-            render json: {status: 'ERROR', message:'Error save conversation', data: conversation.errors}, status: :unprocessable_entity
+            conversationSender = Conversation.where('idCreator = ? and idReceiver = ?', params[:idReceiver], params[:idCreator])
+            if conversationSender.length() > 0
+                render json: {status: 'ERROR', message:'Error save conversation, Conversation already registered'}, status: :unprocessable_entity
+            else
+                conversation = Conversation.new(conversationParams)
+
+                if conversation.save 
+                    render json: {status: 'SUCCESS', message:'conversation saved', data: conversation}, status: :ok
+                else
+                    render json: {status: 'ERROR', message:'Error save conversation', data: conversation.errors}, status: :unprocessable_entity
+                end
+            end
         end
     end
 
