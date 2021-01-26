@@ -114,7 +114,6 @@ Show All Conversation
 > Sample Response
  ```json
 {
-  {
   "status": "SUCCESS",
   "message": "Loaded conversations",
   "data": [
